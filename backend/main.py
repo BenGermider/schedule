@@ -77,5 +77,5 @@ async def list_range(start: str, end: str) -> Dict[str, List[ScheduleItem]]:
 		raise HTTPException(status_code=400, detail=str(e))
 
 
-# Serve frontend
+# Attach frontend to the application.
 app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend") 

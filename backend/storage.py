@@ -5,7 +5,7 @@ import uuid
 from dataclasses import asdict, dataclass
 from datetime import date as date_cls, timedelta
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 from pydantic import ValidationError
 
@@ -32,6 +32,11 @@ class FileStorage:
 
 	@staticmethod
 	def _read_json(path: Path):
+		"""
+		Get schedule database
+		:param path: where database sits
+		:return:
+		"""
 		if not path.exists():
 			return None
 		with path.open("r", encoding="utf-8") as f:
@@ -39,11 +44,22 @@ class FileStorage:
 
 	@staticmethod
 	def _write_json(path: Path, data) -> None:
+		"""
+		Save events in a database
+		:param path: path to save the database
+		:param data: database
+		:return:
+		"""
 		path.parent.mkdir(parents=True, exist_ok=True)
 		with path.open("w", encoding="utf-8") as f:
 			json.dump(data, f, indent=2)
 
 	def _day_file(self, date_str: str) -> Path:
+		"""
+		Get schedule of a day
+		:param date_str:
+		:return:
+		"""
 		return self.data_dir / f"{date_str}.json"
 
 	def _load_index(self) -> Dict[str, str]:
